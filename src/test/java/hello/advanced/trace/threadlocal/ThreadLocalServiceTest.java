@@ -1,13 +1,13 @@
 package hello.advanced.trace.threadlocal;
 
-import hello.advanced.trace.threadlocal.code.FieldService;
+import hello.advanced.trace.threadlocal.code.ThreadLocalService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 @Slf4j
-public class FieldServiceTest {
+public class ThreadLocalServiceTest {
 
-    private FieldService fieldService = new FieldService();
+    private ThreadLocalService Service = new ThreadLocalService();
 
     @Test
     void field() {
@@ -15,10 +15,10 @@ public class FieldServiceTest {
 
         //스레드 실행
         Runnable userA = () -> {
-            fieldService.logic("userA");
+            Service.logic("userA");
         };
         Runnable userB = () -> {
-            fieldService.logic("userB");
+            Service.logic("userB");
         };
         //스레드 생성
         Thread threadA = new Thread(userA);
@@ -26,7 +26,7 @@ public class FieldServiceTest {
         Thread threadB = new Thread(userB);
         threadB.setName("thread-B");
 
-        threadA.start(); //A실행 sleep(2000); //동시성 문제 발생X
+        threadA.start(); //A실행
 //        sleep(2000);  //동시성 문제 발생X
         sleep(100); //동시성 문제 발생O
         threadB.start(); //B실행
